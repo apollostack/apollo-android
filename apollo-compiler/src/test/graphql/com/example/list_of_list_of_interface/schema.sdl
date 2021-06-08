@@ -1,0 +1,22 @@
+interface FilterDescriptionElement {
+  type: String!
+}
+
+type TextFilterDescriptionElement implements FilterDescriptionElement {
+  displayName: String!
+  type: String!
+}
+
+type IconFilterDescriptionElement implements FilterDescriptionElement {
+  name: String!
+  type: String!
+}
+
+type ImageFilterDescriptionElement implements FilterDescriptionElement {
+  image: String!
+  type: String!
+}
+
+type Query {
+  description: [FilterDescriptionElement!]
+}

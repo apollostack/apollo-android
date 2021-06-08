@@ -1,0 +1,16 @@
+query TestQuery {
+    description {
+        ... on TextFilterDescriptionElement {
+            type
+            displayName
+        }
+        ... on IconFilterDescriptionElement {
+            type
+            name
+        }
+        ... on ImageFilterDescriptionElement {
+            type
+            image
+        }
+    }
+}
