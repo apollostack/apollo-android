@@ -10,6 +10,7 @@ import org.gradle.plugins.signing.Sign
 import org.gradle.plugins.signing.SigningExtension
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.plugins.ExtraPropertiesExtension
+import org.jetbrains.dokka.gradle.DokkaTask
 import java.util.Locale
 
 fun Project.configurePublishing() {
@@ -20,9 +21,27 @@ fun Project.configurePublishing() {
     it.plugin("maven-publish")
   }
 
+  pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+    configureDokka()
+  }
+  pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
+    configureDokka()
+  }
   // Not sure if we still need that afterEvaluate
   afterEvaluate {
     configurePublishingDelayed()
+  }
+}
+
+fun Project.configureDokka() {
+  apply {
+    it.plugin("org.jetbrains.dokka")
+  }
+
+  tasks.named("dokkaGfm").configure {
+    it as DokkaTask
+    //https://github.com/Kotlin/dokka/issues/1455
+    it.dependsOn("assemble")
   }
 }
 
